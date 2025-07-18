@@ -4,11 +4,11 @@
 mkdir -p /data/local/tmp/sysui
 
 # Argument link GitHub
-GITHUB_FUNCTIONS_URL3="https://raw.githubusercontent.com/NoxMonnz/NoxMonz/main/design.sh"
+GITHUB_FUNCTIONS_URL3="https://raw.githubusercontent.com/MonnzHEXZ/NoxReal/main/design.sh"
 LOCAL_FUNCTIONS_FILE3="/data/local/tmp/sysui/design.sh"
-GITHUB_FUNCTIONS_URL="https://raw.githubusercontent.com/NoxMonnz/NoxMonz/main/function-library.sh"
+GITHUB_FUNCTIONS_URL="https://raw.githubusercontent.com/MonnzHEXZ/NoxReal/main/function-library.sh"
 LOCAL_FUNCTIONS_FILE="/data/local/tmp/sysui/function-library.sh"
-GITHUB_FUNCTIONS_URL2="https://raw.githubusercontent.com/NoxMonnz/NoxMonz/main/function-library2.sh"
+GITHUB_FUNCTIONS_URL2="https://raw.githubusercontent.com/MonnzHEXZ/NoxReal/main/function-library2.sh"
 LOCAL_FUNCTIONS_FILE2="/data/local/tmp/sysui/function-library2.sh"
 
 # Unduh file fungsi ke lokasi sementara
