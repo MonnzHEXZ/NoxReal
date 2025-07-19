@@ -230,8 +230,6 @@ frame=$(awk "BEGIN {printf \"%.0f\", (1 / $refresh_rate) * 1000000000}")
     setprop debug.sf.disable_backpressure 1
     setprop debug.sf.use_phase_offsets_as_durations 1
 } > /dev/null 2>&1
-
-echo " Detect Hz = "$frame" "
 }
 
 
