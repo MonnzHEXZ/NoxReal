@@ -14,9 +14,9 @@ sleep 1
 
 # Checking Internet
 if ping -c 1 8.8.8.8 >/dev/null 2>&1; then
-  echo "-  Module Proper  =  Connected "
+  echo "-  Module Proper  =   Connected "
 else
-  echo "-  Module Proper  =  Non Connected! "
+  echo "-  Module Proper  =   Non Connected! "
   exit 1
 fi
 
