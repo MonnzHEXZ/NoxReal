@@ -211,60 +211,27 @@ Soc_optimizer() {
 
 
 SF() {
-refresh_rate=$(dumpsys display | grep -oE 'fps=[0-9]+' | awk -F '=' '{print $2}' | head -n 1)
+refresh_rate=$(dumpsys display | grep -oE 'fps=[0-9]+' | awk -F '=' '{print $2 + 2}' | head -n 1)
+frame=$(awk "BEGIN {printf \"%.0f\", (1 / $refresh_rate) * 1000000000}")
 
-if [[ "$refresh_rate" == "60" ]]; then
-   {
-   dumpsys SurfaceFlinger --timestats -clear -disable
-   setprop debug.sf.late.sf.duration 1666666
-   setprop debug.sf.late.app.duration 1666666
-   setprop debug.sf.early.sf.duration 1666666
-   setprop debug.sf.early.app.duration 1666666
-   setprop debug.sf.earlyGl.sf.duration 1666666
-   setprop debug.sf.earlyGl.app.duration 1666666
-   setprop debug.sf.hwc.min.duration 1666666
-   setprop debug.vsync_event_phase_offset_ns 1666666
-   setprop debug.vsync_sf_event_phase_offset_ns 1666666
-   setprop debug.sf.phase_offset_threshold_for_next_vsync_ns 1666666
-   setprop debug.sf.latch_unsignaled false
-   setprop debug.sf.disable_backpressure 1
-   setprop debug.sf.use_phase_offsets_as_durations 1666666
-   } > /dev/null 2>&1
-elif [[ "$refresh_rate" == "90" ]]; then
-   {
-   dumpsys SurfaceFlinger --timestats -clear -disable
-   setprop debug.sf.late.sf.duration 11111111
-   setprop debug.sf.late.app.duration 11111111
-   setprop debug.sf.early.sf.duration 11111111
-   setprop debug.sf.early.app.duration 11111111
-   setprop debug.sf.earlyGl.sf.duration 11111111
-   setprop debug.sf.earlyGl.app.duration 11111111
-   setprop debug.sf.hwc.min.duration 11111111
-   setprop debug.vsync_event_phase_offset_ns 11111111
-   setprop debug.vsync_sf_event_phase_offset_ns 11111111
-   setprop debug.sf.phase_offset_threshold_for_next_vsync_ns 11111111
-   setprop debug.sf.latch_unsignaled false
-   setprop debug.sf.disable_backpressure 1
-   setprop debug.sf.use_phase_offsets_as_durations 11111111
-   } > /dev/null 2>&1   
-elif [[ "$refresh_rate" == "120" ]]; then
-   {
-   dumpsys SurfaceFlinger --timestats -clear -disable
-   setprop debug.sf.late.sf.duration 8333333
-   setprop debug.sf.late.app.duration 8333333
-   setprop debug.sf.early.sf.duration 8333333
-   setprop debug.sf.early.app.duration 8333333
-   setprop debug.sf.earlyGl.sf.duration 8333333
-   setprop debug.sf.earlyGl.app.duration 8333333
-   setprop debug.sf.hwc.min.duration 8333333
-   setprop debug.vsync_event_phase_offset_ns 8333333
-   setprop debug.vsync_sf_event_phase_offset_ns 8333333
-   setprop debug.sf.phase_offset_threshold_for_next_vsync_ns 8333333
-   setprop debug.sf.latch_unsignaled false
-   setprop debug.sf.disable_backpressure 1
-   setprop debug.sf.use_phase_offsets_as_durations 8333333
-   } > /dev/null 2>&1   
-fi   
+{
+    dumpsys SurfaceFlinger --timestats -clear -disable
+    setprop debug.sf.late.sf.duration "$frame"
+    setprop debug.sf.late.app.duration "$frame"
+    setprop debug.sf.early.sf.duration "$frame"
+    setprop debug.sf.early.app.duration "$frame"
+    setprop debug.sf.earlyGl.sf.duration "$frame"
+    setprop debug.sf.earlyGl.app.duration "$frame"
+    setprop debug.sf.hwc.min.duration "$frame"
+    setprop debug.vsync_event_phase_offset_ns "$frame"
+    setprop debug.vsync_sf_event_phase_offset_ns "$frame"
+    setprop debug.sf.phase_offset_threshold_for_next_vsync_ns "$frame"
+    setprop debug.sf.latch_unsignaled false
+    setprop debug.sf.disable_backpressure 1
+    setprop debug.sf.use_phase_offsets_as_durations 1
+} > /dev/null 2>&1
+
+echo " Detect Hz = "$frame" "
 }
 
 
