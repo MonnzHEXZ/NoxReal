@@ -60,11 +60,13 @@ Removed="$2"
 case "$Removed" in
   -A)
     echo "-]÷————————————————< Reboot >——————————————————— "
+    echo " "
     sleep 4
     sleep 0.2 && Reboot
     ;;
   *)
     echo "-]÷—————————————————< Done >———————————————————— "
+    echo " "
     exit 1
     ;;
 esac
