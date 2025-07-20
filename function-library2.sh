@@ -210,6 +210,7 @@ Soc_optimizer() {
 
 
 
+# By @Nite_XD
 SF() {
 refresh_rate=$(dumpsys display | grep -oE 'fps=[0-9]+' | awk -F '=' '{print $2 + 2}' | head -n 1)
 frame=$(awk "BEGIN {printf \"%.0f\", (1 / $refresh_rate) * 1000000000}")
