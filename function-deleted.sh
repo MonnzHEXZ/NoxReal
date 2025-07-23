@@ -169,6 +169,52 @@ soc=$(getprop ro.soc.manufacturer)
 
 
 
+# By @Nite_XD
+RSF() {
+refresh_rate=$(dumpsys display | grep -oE 'fps=[0-9]+' | awk -F '=' '{print $2 + 2}' | head -n 1)
+frame_time=$(awk "BEGIN {printf \"%.0f\", (1 / $refresh_rate) * 1000000}")
+
+early_offset=$((frame_time / 5))
+late_offset=$((frame_time * 5 / 6))
+negative_offset=$((early_offset * -1))
+gl_duration=$((late_offset + frame_time / 15))
+idle_timer=$((frame_time / 1000000 + 800))
+sampling_duration=$((frame_time * 4 / 5))
+sampling_period=$((frame_time * 9 / 10))
+
+  {
+    dumpsys SurfaceFlinger --timestats -clear -disable
+    setprop debug.sf.enable_advanced_sf_phase_offset 1
+    setprop debug.sf.use_phase_offset_as_durations 1
+    setprop debug.sf.latch_unsignaled false
+    setprop debug.sf.disable_backpressure 1
+    setprop debug.sf.use_phase_offsets_as_durations 1
+    setprop debug.sf.hwc.min.duration "$frame_time"
+    setprop debug.sf.early.app.duration "$early_offset"
+    setprop debug.sf.late.app.duration "$late_offset"
+    setprop debug.sf.early.sf.duration "$early_offset"
+    setprop debug.sf.late.sf.duration "$late_offset"
+    setprop debug.sf.set_idle_timer_ms "$idle_timer"
+    setprop debug.sf.earlyGl.sf.duration "$gl_duration"
+    setprop debug.sf.earlyGl.app.duration "$gl_duration"
+    setprop debug.sf.early_phase_offset_ns "$early_offset"
+    setprop debug.sf.early_gl_phase_offset_ns "$early_offset"
+    setprop debug.sf.early_app_phase_offset_ns "$early_offset"
+    setprop debug.sf.early_gl_app_phase_offset_ns "$early_offset"
+    setprop debug.sf.high_fps_early_app_phase_offset_ns "$negative_offset"
+    setprop debug.sf.high_fps_late_app_phase_offset_ns "$late_offset"
+    setprop debug.sf.high_fps_early_sf_phase_offset_ns "$negative_offset"
+    setprop debug.sf.high_fps_late_sf_phase_offset_ns "$late_offset"
+    setprop debug.sf.high_fps_early_gl_phase_offset_ns "$early_offset"
+    setprop debug.sf.high_fps_early_gl_app_phase_offset_ns "$early_offset"
+    setprop debug.sf.phase_offset_threshold_for_next_vsync_ns "$frame_ns"
+    setprop debug.vsync_event_phase_offset_ns "$frame_ns"
+    setprop debug.vsync_sf_event_phase_offset_ns "$frame_ns"
+  } > /dev/null 2>&1
+}
+
+
+
 # BY @Kzyoo
 network_default() {
 {
